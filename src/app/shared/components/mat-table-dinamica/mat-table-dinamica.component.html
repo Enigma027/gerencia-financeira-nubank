@@ -3,12 +3,24 @@
 <button style="margin-bottom: 15px" type="button" mat-raised-button color="primary" (click)="exportCsv()">Exportar como CSV</button>
 
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
-    @for (column of inputDisplayColumns(); track column) {
+    @for (column of inputDisplayColumns(); track column) { @if (column !== 'Classificacao') {
     <ng-container [matColumnDef]="column">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
         <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
     </ng-container>
-    }
+    } }
+
+    <ng-container matColumnDef="Classificacao">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center">Classificação</th>
+        <td mat-cell *matCellDef="let row; let i = index">
+            <mat-select [(ngModel)]="row.Classificacao" >
+                @for (classificacao of classificacoes; track $index) {
+                <mat-option [value]="classificacao.valor">{{ classificacao.descricao }}</mat-option>
+                }
+            </mat-select>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="inputDisplayColumns()"></tr>
     <tr mat-row *matRowDef="let row; columns: inputDisplayColumns()" [style.background-color]="row.ROWCOLOR"></tr>

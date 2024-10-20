@@ -1,14 +1,17 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { AfterViewInit, Component, effect, inject, input, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { ExtratoNubank } from '../../../features/gerenciamento-csv/interfaces/extrato-nubank';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-mat-table-dinamica',
     standalone: true,
-    imports: [MatTableModule, MatSortModule, CurrencyPipe, MatButtonModule],
+    imports: [MatTableModule, MatSortModule, CurrencyPipe, MatButtonModule, MatSelectModule, CommonModule, FormsModule],
     templateUrl: './mat-table-dinamica.component.html',
     styleUrl: './mat-table-dinamica.component.scss',
 })
@@ -17,7 +20,7 @@ export class MatTableDinamicaComponent implements AfterViewInit {
 
     constructor() {
         effect(() => {
-            this.dataSource = new MatTableDataSource<any>(this.inputDatasource());
+            this.dataSource = new MatTableDataSource<ExtratoNubank>(this.inputDatasource());
 
             if (this.sort) {
                 this.dataSource.sort = this.sort;
@@ -42,13 +45,28 @@ export class MatTableDinamicaComponent implements AfterViewInit {
         this.setDataSourceAttributes();
     }
 
+    classificacoes = [
+        { descricao: 'Lanches', valor: 'lanches' },
+        { descricao: 'Transporte', valor: 'transporte' },
+        { descricao: 'Outros', valor: 'outros' },
+        { descricao: 'Lazer', valor: 'lazer' },
+        { descricao: 'Conta', valor: 'conta' },
+        { descricao: 'Dívida', valor: 'divida' },
+        { descricao: 'Aporte', valor: 'aporte' },
+        { descricao: 'Cuidados Pessoais', valor: 'cuidadosPessoais' },
+        { descricao: 'Manutenção/Moto', valor: 'manutencaoMoto' },
+        { descricao: 'Habitação', valor: 'habitacao' },
+        { descricao: 'Jogos/Hardwares', valor: 'jogosHardwares' },
+        { descricao: 'Alimentação', valor: 'alimentacao' },
+    ];
+
+    dataSource = new MatTableDataSource<ExtratoNubank>();
+
     setDataSourceAttributes() {
         if (this.sort) {
             this.dataSource.sort = this.sort;
         }
     }
-
-    dataSource = new MatTableDataSource();
 
     /** Announce the change in sort state for assistive technology. */
     announceSortChange(sortState: any) {
@@ -64,7 +82,7 @@ export class MatTableDinamicaComponent implements AfterViewInit {
     }
 
     exportCsv() {
-        const headers = Object.keys(this.dataSource.data[0] as Array<any>).join(',') + '\n';
+        const headers = Object.keys(this.dataSource.data[0]).join(',') + '\n';
         const csvRows = (this.dataSource.data as Array<any>).map(row => Object.values(row).join(','));
         const csvData = headers + csvRows.join('\n');
 
@@ -80,5 +98,10 @@ export class MatTableDinamicaComponent implements AfterViewInit {
 
         link.click();
         document.body.removeChild(link);
+    }
+
+    onClassificacaoChange(novoValor: string, index: number) {
+        // Atualiza o valor de classificação no objeto correto do array dataSource
+        this.dataSource.data[index].Classificacao = novoValor;
     }
 }

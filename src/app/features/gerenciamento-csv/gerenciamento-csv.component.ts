@@ -14,7 +14,7 @@ export class GerenciamentoCsvComponent {
     @ViewChild('fileInput', { static: true }) fileInput?: ElementRef;
 
     extrato = signal<ExtratoNubank[]>([]);
-    displayedColumns = signal(['Descricao', 'Valor', 'Data', 'Identificador']);
+    displayedColumns = signal(['Descricao', 'Valor', 'Data', 'Classificacao']);
     total = signal(0);
 
     handleFileInput() {
@@ -68,9 +68,8 @@ export class GerenciamentoCsvComponent {
         const lines = csvData.split('\n'); // Divide o arquivo em linhas
         const result: ExtratoNubank[] = [];
 
-        if (lines.length > 0 && ['Data', 'Descrição', 'Identificador', 'Valor'].every(keyword => lines[0].includes(keyword))) {
+        if (lines.length > 0) {
             const headers = lines[0].replace('Descrição', 'Descricao').split(','); // Obtém os títulos das colunas da primeira linha
-
             // Itera sobre cada linha de dados (exceto a primeira)
             for (let i = 1; i < lines.length; i++) {
                 const currentLine = lines[i].split(',');

@@ -3,7 +3,7 @@ export interface ExtratoNubank {
     Descricao: string;
     Identificador: string;
     Valor: number;
-    tipo?: string;
-    classificacao?: string;
+    Tipo?: string;
+    Classificacao?: string;
     ROWCOLOR?: string;
 }
