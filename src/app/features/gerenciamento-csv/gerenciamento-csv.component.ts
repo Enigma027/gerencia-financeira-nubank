@@ -14,7 +14,7 @@ export class GerenciamentoCsvComponent {
     @ViewChild('fileInput', { static: true }) fileInput?: ElementRef;
 
     extrato = signal<ExtratoNubank[]>([]);
-    displayedColumns = signal(['Descricao', 'Valor', 'Data', 'Classificacao']);
+    displayedColumns = signal(['Descricao', 'Valor', 'Data', 'Tipo', 'Classificacao']);
     total = signal(0);
 
     handleFileInput() {
@@ -44,14 +44,18 @@ export class GerenciamentoCsvComponent {
                         }
 
                         let cor = '';
+                        let tipo = '';
 
                         if (+movimentacao.Valor < 0) {
-                            cor = 'red';
+                            cor = '#b10000';
+                            tipo = 'Saída';
                         } else {
                             cor = 'green';
+                            tipo = 'Entrada';
                         }
 
                         movimentacao.ROWCOLOR = cor;
+                        movimentacao.Tipo = tipo;
                     });
 
                     this.total.set(objectArray.map(t => t.Valor).reduce((acc, value) => acc + value, 0));
