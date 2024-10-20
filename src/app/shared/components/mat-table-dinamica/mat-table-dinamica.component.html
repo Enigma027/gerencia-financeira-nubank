@@ -1,0 +1,16 @@
+@if (dataSource.data.length > 0) {
+
+<button style="margin-bottom: 15px" type="button" mat-raised-button color="primary" (click)="exportCsv()">Exportar como CSV</button>
+
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
+    @for (column of inputDisplayColumns(); track column) {
+    <ng-container [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
+        <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+    </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="inputDisplayColumns()"></tr>
+    <tr mat-row *matRowDef="let row; columns: inputDisplayColumns()" [style.background-color]="row.ROWCOLOR"></tr>
+</table>
+}

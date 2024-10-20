@@ -1,0 +1,6 @@
+<div class="app">
+    <button type="button" mat-raised-button (click)="fileInput.click()">Importar Arquivo</button>
+    <input hidden (change)="handleFileInput()" #fileInput #file type="file" id="file" accept=".csv" />
+</div>
+
+<app-mat-table-dinamica [inputDatasource]="extrato()" [inputDisplayColumns]="displayedColumns()" [inputTotal]="total()"></app-mat-table-dinamica>

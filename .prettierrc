@@ -1,0 +1,21 @@
+{
+    "printWidth": 180,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "arrowParens": "avoid",
+    "htmlWhitespaceSensitivity": "ignore",
+    "vueIndentScriptAndStyle": true,
+    "overrides": [
+        {
+            "files": "*.html",
+            "options": {
+                "parser": "html",
+                "braceStyle": "collapse",
+                "embeddedLanguageFormatting": "auto"
+            }
+        }
+    ]
+}

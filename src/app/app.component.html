@@ -1,0 +1,9 @@
+<mat-toolbar style="margin-bottom: 15px;">
+    <div class="grid-container">
+        <div class="grid-item">by keven</div>
+        <div class="grid-item"><h1>Bem-vindo ao Meu App de Gestão finaceira</h1></div>
+        <div class="grid-item"><mat-slide-toggle [(ngModel)]="isDarkMode" (change)="toggleDarkMode($event)">Dark Mode</mat-slide-toggle></div>
+    </div>
+</mat-toolbar>
+
+<router-outlet />

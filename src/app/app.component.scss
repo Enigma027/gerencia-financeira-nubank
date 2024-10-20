@@ -1,0 +1,18 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 100%;
+}
+.grid-item {
+    text-align: center;
+}
+
+.grid-item:nth-child(3) {
+    display: flex;
+    justify-content: end;
+}
+
+.grid-item:nth-child(1) {
+    display: flex;
+    justify-content: start;
+}

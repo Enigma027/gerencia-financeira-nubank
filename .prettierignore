@@ -1,0 +1,8 @@
+# Ignore arquivos de configuração do sistema
+node_modules
+dist
+
+# Ignore arquivos de cache do editor
+.vscode
+.idea
+*.lock
